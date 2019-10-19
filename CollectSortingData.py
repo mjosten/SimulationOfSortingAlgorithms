@@ -76,7 +76,7 @@ def collectSortingData(inputPath, outputPath):
     setupCSV(outputFile)
     # increment the size of the data by 100
     #for i in range(10, len(A), 100):
-    for i in range(10, 12):
+    for i in range(10, len(A), 100):
         testA = A[:i]
         sizeOfData = len(testA)
         sortedness = CalcSortedness(testA)
