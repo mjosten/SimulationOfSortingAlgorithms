@@ -58,11 +58,11 @@ NORM_RAND_DIST_OUTPUT = "NormalRandomDistributionResults.csv"
 
 # Main driver function for the data collection program
 def main():
-    collectSortingData(NORM_RAND_DIST_SET, NORM_RAND_DIST_OUTPUT, 10, 12)
+    collectSortingData(NORM_RAND_DIST_SET, NORM_RAND_DIST_OUTPUT)
 
 # Function that takes the input path of the data, performs the experiments described
 # and outputs the results to the outputPath file.
-def collectSortingData(inputPath, outputPath, dataStart, dataEnd):
+def collectSortingData(inputPath, outputPath):
     print("Starting: {}".format(inputPath))
     A = []
     # open input file and extract data set
@@ -76,7 +76,7 @@ def collectSortingData(inputPath, outputPath, dataStart, dataEnd):
     setupCSV(outputFile)
     # increment the size of the data by 100
     #for i in range(10, len(A), 100):
-    for i in range(dataStart, dataEnd):
+    for i in range(10, 12):
         testA = A[:i]
         sizeOfData = len(testA)
         sortedness = CalcSortedness(testA)
