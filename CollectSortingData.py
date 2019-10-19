@@ -38,6 +38,11 @@ Graph 3: X = Degree of Sortedness, Y = Algorithm Runtime
 Graph 4: X = Degree of Sortedness, Y = Algorithm Footprint
 Plotting graphs will be in a different module, it is just described here
 
+The Runtime of an algorithm is displayed as fractional seconds. 
+- For examples: 1.33 fracional seconds = 1 second and 330 milliseconds TODO find out if this is true
+The Data used will be in MB (MegaBytes) TODO or can be in Asymptotic size if we need to change is
+
+
 TODO: If need something between 0-1 for sortedness can look at Spearman Correleation Coefficient
 
 """
@@ -53,14 +58,12 @@ NORM_RAND_DIST_OUTPUT = "NormalRandomDistributionResults.csv"
 
 # Main driver function for the data collection program
 def main():
-    # A = [6, 5, 4, 3, 2, 1]
-    # print("{:.6f}".format(CalcSortedness(A)))
-    collectSortingData(NORM_RAND_DIST_SET, NORM_RAND_DIST_OUTPUT)
-
+    collectSortingData(NORM_RAND_DIST_SET, NORM_RAND_DIST_OUTPUT, 10, 12)
 
 # Function that takes the input path of the data, performs the experiments described
 # and outputs the results to the outputPath file.
-def collectSortingData(inputPath, outputPath):
+def collectSortingData(inputPath, outputPath, dataStart, dataEnd):
+    print("Starting: {}".format(inputPath))
     A = []
     # open input file and extract data set
     with open(inputPath, 'r') as input:
@@ -69,24 +72,74 @@ def collectSortingData(inputPath, outputPath):
             # collect array of data
             A.append(int(line.strip(" \n\t")))
     
+    outputFile = open(outputPath, 'w+')
+    setupCSV(outputFile)
     # increment the size of the data by 100
-    # for i in range(10, len(A), 100):
-    #     testA = A[:i]
-    #     sizeOfData = len(testA)
-    #     sortedness = CalcSortedness(testA)
-    #     bubbleStartTime = time.perf_counter()
-    testA = A[:100]
-    sizeOfData = len(testA)
-    sortedness = CalcSortedness(testA)
-    bubbleStartTime = time.perf_counter()
-    bubbleFootprint = memory_usage((BubbleSort, [testA]), max_usage=True)
-    bubbleRunTime = (time.perf_counter() - bubbleStartTime)
-    print("Size of Data = {}".format(sizeOfData))
-    print("Measure of Sortedness = {}".format(sortedness))
-    print("BubbleSort Runtime = {}".format(bubbleRunTime))
-    print("Bubble Footprint = {}".format(bubbleFootprint))
-    
+    #for i in range(10, len(A), 100):
+    for i in range(dataStart, dataEnd):
+        testA = A[:i]
+        sizeOfData = len(testA)
+        sortedness = CalcSortedness(testA)
 
+        runtimeDict = {"bubble":0, "selection":0, "insertion":0, "mergesort":0, "quicksort":0}
+        footprintDict = {"bubble":0, "selection":0, "insertion":0, "mergesort":0, "quicksort":0}
+
+        for _ in range(5):
+            # Run each sorting algorithm over test list A
+            bubbleRuntime, bubbleFootprint = testSorting(testA, BubbleSort)
+            selectionRuntime, selectionFootprint = testSorting(testA, SelectionSort)
+            insertionRuntime, insertionFootprint = testSorting(testA, InsertionSort)
+            mergesortRuntime, mergesortFootprint = testSorting(testA, MergeSort)
+            quicksortRuntime, quicksortFootprint = testSorting(testA, QuickSort)
+            
+            #Calculate sums of the runtimes and footprints
+            #bubble
+            runtimeDict["bubble"] += bubbleRuntime
+            footprintDict["bubble"] += bubbleFootprint[0]
+            #selection
+            runtimeDict["selection"] += selectionRuntime
+            footprintDict["selection"] += selectionFootprint[0]
+            #insertion
+            runtimeDict["insertion"] += insertionRuntime
+            footprintDict["insertion"] += insertionFootprint[0]
+            #mergesort
+            runtimeDict["mergesort"] += mergesortRuntime
+            footprintDict["mergesort"] += mergesortFootprint[0]
+            #quicksort
+            runtimeDict["quicksort"] += quicksortRuntime
+            footprintDict["quicksort"] += quicksortFootprint[0]
+        
+        #average the runtimes and footprints
+        for key in runtimeDict.keys():
+            runtimeDict[key] = runtimeDict[key] / 5
+            footprintDict[key] = footprintDict[key] / 5
+        
+        writeToOutput(outputFile, sizeOfData, sortedness, runtimeDict, footprintDict)
+        print("Finished Data Size: {}".format(sizeOfData))
+    
+# Function that will write the results of a sorting test to the output file
+def writeToOutput(output, dataSize, sortedness, runtimeDict, footprintDict):
+#Size of Data, Degree of Sortedness, Bubble Runtime, Bubble Footprint, Selection Runtime, Selection Footprint, Insertion Runtime, Insertion Footprint, MergeSort Runtime, MergeSort Footprint, QuickSort Runtime, QuickSort Footprint
+    data = "{}, {}, {:.8f}, {:.8f}, {:.8f}, {:.8f}, {:.8f}, {:.8f}, {:.8f}, {:.8f}, {:.8f}, {:.8f}\n".format(
+        dataSize, sortedness, runtimeDict["bubble"], footprintDict["bubble"],
+        runtimeDict["selection"], footprintDict["selection"], runtimeDict["insertion"], footprintDict["insertion"],
+        runtimeDict["mergesort"], footprintDict["mergesort"], runtimeDict["quicksort"], footprintDict["quicksort"])
+    output.write(data)
+
+# Function that will write the data labels to the csv
+def setupCSV(output):
+    dataLabels = "Size of Data, Degree of Sortedness, Bubble Runtime, Bubble Footprint, Selection Runtime, Selection Footprint, Insertion Runtime, Insertion Footprint, MergeSort Runtime, MergeSort Footprint, QuickSort Runtime, QuickSort Footprint\n"
+    output.write(dataLabels)
+
+"""
+Function that takes a array a, and a sorting algorithm sortF and will 
+record runtime and data footprint of the sorting algorithm
+"""
+def testSorting(A, sortF):
+    startTime = time.perf_counter()
+    footPrint = memory_usage((sortF, [A]), max_usage=True)
+    runTime = (time.perf_counter() - startTime)
+    return runTime, footPrint
         
 """
 A measure of sortedness could be the number of inversions. This is the number
@@ -100,6 +153,12 @@ def CalcSortedness(A):
                 inversionCount += 1
     return inversionCount 
 
+# function that sums all the elements of a list
+def sumList(A):
+    total = 0
+    for el in A:
+        total += el
+    return total
 
 if __name__ == "__main__":
     main()

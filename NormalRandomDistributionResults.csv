@@ -1,0 +1,3 @@
+Size of Data, Degree of Sortedness, Bubble Runtime, Bubble Footprint, Selection Runtime, Selection Footprint, Insertion Runtime, Insertion Footprint, MergeSort Runtime, MergeSort Footprint, QuickSort Runtime, QuickSort Footprint
+10, 22, 1.30035506, 14.68750000, 1.29119324, 14.68750000, 1.29081784, 14.68750000, 1.15289694, 14.69765625, 1.26736382, 14.69765625
+11, 27, 1.31376658, 14.76171875, 1.33813344, 14.76171875, 1.30423228, 14.74218750, 1.26103234, 14.74218750, 1.33691656, 14.75390625
