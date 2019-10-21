@@ -22,8 +22,13 @@ The amount of memory that bubble sort needs to use
 11. QuickSort Runtime
 12. QuickSort Footprint
 
-We will have a Random Normal Distribution set of 20,000 numbers. with mean of 50 
+Datasets:
+1. We will have a Random Normal Distribution set of 25,000 numbers. with mean of 50 
 and standard deviation of 30
+2. Global terrorism count by country from 1970 to 2015. 9270 numbers, no negative numbers
+3. Average earning data set. 11130 numbers
+4. Uniform Random Distribution set of 25,000 decimal numbers from 0 to 100
+
 
 For each data set, we will start at a low number of data from that set, then increment 
 the data usage by 100 or 300 or whichever amount is most appropriate. Each time the data
@@ -52,13 +57,26 @@ import time
 from memory_profiler import memory_usage
 from SortingAlgorithms import BubbleSort, SelectionSort, InsertionSort, MergeSort, QuickSort
 
+#NormalRandomDistribution
 NORM_RAND_DIST_SET = "NormalRandomDistribution.csv"
 NORM_RAND_DIST_OUTPUT = "NormalRandomDistributionResults.csv"
+#UniformRandomDistribution
+UNIF_RAND_DIST_SET = "UniformRandomDistribution.csv"
+UNIF_RAND_DIST_OUTPUT = "UniformRandomDistributionResults.csv"
+#AverageEarningDataset
+AVG_EARN_DATASET = "AverageEarningsDataset.csv"
+AVG_EARN_OUTPUT = "AverageEarningsDatasetResults.csv"
+#IncomeForCreditCardDefaultDataset
+INC_CREDIT_DEFAULT_DATASET = "IncomeForCreditCardDefaultDataset.csv"
+INC_CREDIT_DEFAULT_OUTPUT = "IncomeForCreditCardDefaultDatasetResults.csv"
 
 
 # Main driver function for the data collection program
 def main():
-    collectSortingData(NORM_RAND_DIST_SET, NORM_RAND_DIST_OUTPUT)
+    #collectSortingData(NORM_RAND_DIST_SET, NORM_RAND_DIST_OUTPUT)
+    # collectSortingData(UNIF_RAND_DIST_SET, UNIF_RAND_DIST_OUTPUT)
+    # collectSortingData(AVG_EARN_DATASET, AVG_EARN_OUTPUT)
+    collectSortingData(INC_CREDIT_DEFAULT_DATASET, INC_CREDIT_DEFAULT_OUTPUT)
 
 # Function that takes the input path of the data, performs the experiments described
 # and outputs the results to the outputPath file.
@@ -70,7 +88,7 @@ def collectSortingData(inputPath, outputPath):
         input.readline()
         for line in input.readlines():
             # collect array of data
-            A.append(int(line.strip(" \n\t")))
+            A.append(float(line.strip(" \n\t")))
     
     outputFile = open(outputPath, 'w+')
     setupCSV(outputFile)

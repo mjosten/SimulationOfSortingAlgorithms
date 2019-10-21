@@ -20,7 +20,7 @@ import csv
 NORM_RAND_DIST_PATH = "NormalRandomDistributionResults.csv"
 
 def main():
-    plotData(NORM_RAND_DIST_PATH)
+    plotData(NORM_RAND_DIST_PATH, "Random Normal Distribution Dataset", 25000, 160000000, 60, 25)
 
 
 """
@@ -29,7 +29,7 @@ each sorting algorithms runtime and memory usage. Will plot the 4 different grap
 for the csv file
 @param inputPath is the input path to the csv file containing the sorting data
 """
-def plotData(inputPath):
+def plotData(inputPath, title, dataSizeLim, sortednessLim, runtimeLim, footprintLim):
 
     dataSize = []
     sortedness = []
@@ -38,24 +38,31 @@ def plotData(inputPath):
     sortData(inputPath, dataSize, sortedness, runtimeDict, footprintDict)
 
     figs, axs = plt.subplots(2, 2, figsize=(8,8))
-    plotSubplot(axs[0,0], dataSize, runtimeDict, "Size of Data", "Runtime", "Runtime on Data Size")
-    plotSubplot(axs[0,1], dataSize, footprintDict, "Size of Data", "Footprint", "Footprint on Data Size")
-    plotSubplot(axs[1,0], sortedness, runtimeDict, "Sortedness", "Runtime", "Runtime on Sortedness")
-    plotSubplot(axs[1,1], sortedness, footprintDict, "Sortedness", "Footprint", "Footprint on Sortedness")
+    figs.suptitle(title, fontsize=16)
+
+    plotSubplot(axs[0,0], dataSize, runtimeDict, "Size of Data", "Runtime", "Runtime on Data Size", [10, dataSizeLim], [0, runtimeLim])
+    plotSubplot(axs[0,1], dataSize, footprintDict, "Size of Data", "Footprint", "Footprint on Data Size", [10, dataSizeLim], [0, footprintLim])
+    plotSubplot(axs[1,0], sortedness, runtimeDict, "Sortedness", "Runtime", "Runtime on Sortedness", [0, sortednessLim], [0, runtimeLim])
+    plotSubplot(axs[1,1], sortedness, footprintDict, "Sortedness", "Footprint", "Footprint on Sortedness", [0, sortednessLim], [0, footprintLim])
 
     axs[0,0].legend(["Bubble Sort", "Selection Sort", "Insertion Sort", "MergeSort", "QuickSort"], loc='best')
 
-    plt.tight_layout()
+    plt.tight_layout(rect=[0, 0.03, 1, 0.95])
     plt.show()
 
 # Function that will plot the subplots based on the x list and the y dictionary
-def plotSubplot(ax, xList, yDict, xLabel, yLabel, title):
+def plotSubplot(ax, xList, yDict, xLabel, yLabel, title, xlim=[0,0], ylim=[0,0]):
     color = ['r-', 'b-', 'g-', 'c-', 'y-']
     for i, key in enumerate(yDict.keys()):
         ax.plot(xList, yDict[key], color[i])
     ax.set_xlabel(xLabel)
     ax.set_ylabel(yLabel)
     ax.set_title(title)
+    if not (xlim[0] == 0 and xlim[1] == 0):
+        ax.set_xlim(xlim)
+    if not (ylim[0] == 0 and ylim[1] == 0):
+        ax.set_ylim(ylim)
+
     
 # Function that will iterate through the csv file and will populate the lists and 
 # dictionaries passed with data from each column.
