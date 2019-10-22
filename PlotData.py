@@ -18,9 +18,16 @@ import matplotlib.pyplot as plt
 import csv
 
 NORM_RAND_DIST_PATH = "NormalRandomDistributionResults.csv"
+UNIF_RAND_DIST_PATH = "UniformRandomDistributionResults.csv"
+INC_CREDIT_DEFAULT_PATH = "IncomeForCreditCardDefaultDatasetResults.csv"
+AVG_EARNING_PATH = "AverageEarningsDatasetResults.csv"
 
 def main():
-    plotData(NORM_RAND_DIST_PATH, "Random Normal Distribution Dataset", 25000, 160000000, 60, 25)
+    plotData(NORM_RAND_DIST_PATH, "Random Normal Distribution Dataset", 25000, 153000000, 60, 18)
+    plotData(UNIF_RAND_DIST_PATH, "Random Uniform Distribution Dataset", 25000, 155000000, 60, 18)
+    plotData(INC_CREDIT_DEFAULT_PATH, "Income For Credit Card Default Dataset", 10000, 24600000, 10, 16)
+    plotData(AVG_EARNING_PATH, "Average Hourly Earning Dataset", 12000, 31240000, 12, 17)
+    
 
 
 """
@@ -41,9 +48,9 @@ def plotData(inputPath, title, dataSizeLim, sortednessLim, runtimeLim, footprint
     figs.suptitle(title, fontsize=16)
 
     plotSubplot(axs[0,0], dataSize, runtimeDict, "Size of Data", "Runtime", "Runtime on Data Size", [10, dataSizeLim], [0, runtimeLim])
-    plotSubplot(axs[0,1], dataSize, footprintDict, "Size of Data", "Footprint", "Footprint on Data Size", [10, dataSizeLim], [0, footprintLim])
+    plotSubplot(axs[0,1], dataSize, footprintDict, "Size of Data", "Footprint", "Footprint on Data Size", [10, dataSizeLim])#, [14, footprintLim])
     plotSubplot(axs[1,0], sortedness, runtimeDict, "Sortedness", "Runtime", "Runtime on Sortedness", [0, sortednessLim], [0, runtimeLim])
-    plotSubplot(axs[1,1], sortedness, footprintDict, "Sortedness", "Footprint", "Footprint on Sortedness", [0, sortednessLim], [0, footprintLim])
+    plotSubplot(axs[1,1], sortedness, footprintDict, "Sortedness", "Footprint", "Footprint on Sortedness", [0, sortednessLim])#, [14, footprintLim])
 
     axs[0,0].legend(["Bubble Sort", "Selection Sort", "Insertion Sort", "MergeSort", "QuickSort"], loc='best')
 
