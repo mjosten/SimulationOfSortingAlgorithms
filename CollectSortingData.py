@@ -25,7 +25,7 @@ The amount of memory that bubble sort needs to use
 Datasets:
 1. We will have a Random Normal Distribution set of 25,000 numbers. with mean of 50 
 and standard deviation of 30
-2. Global terrorism count by country from 1970 to 2015. 9270 numbers, no negative numbers
+2. Income when invidvidual defaults on a credit card dataset. 10000 decimal numbers.
 3. Average earning data set. 11130 numbers
 4. Uniform Random Distribution set of 25,000 decimal numbers from 0 to 100
 
