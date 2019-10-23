@@ -17,10 +17,10 @@ Graph 4: X = degree of sortedness, y = amount of memory used
 import matplotlib.pyplot as plt
 import csv
 
-NORM_RAND_DIST_PATH = "NormalRandomDistributionResults.csv"
-UNIF_RAND_DIST_PATH = "UniformRandomDistributionResults.csv"
-INC_CREDIT_DEFAULT_PATH = "IncomeForCreditCardDefaultDatasetResults.csv"
-AVG_EARNING_PATH = "AverageEarningsDatasetResults.csv"
+NORM_RAND_DIST_PATH = "results/NormalRandomDistributionResults.csv"
+UNIF_RAND_DIST_PATH = "results/UniformRandomDistributionResults.csv"
+INC_CREDIT_DEFAULT_PATH = "results/IncomeForCreditCardDefaultDatasetResults.csv"
+AVG_EARNING_PATH = "results/AverageEarningsDatasetResults.csv"
 
 def main():
     plotData(NORM_RAND_DIST_PATH, "Random Normal Distribution Dataset", 25000, 153000000, 60, 18)

@@ -58,17 +58,17 @@ from memory_profiler import memory_usage
 from SortingAlgorithms import BubbleSort, SelectionSort, InsertionSort, MergeSort, QuickSort
 
 #NormalRandomDistribution
-NORM_RAND_DIST_SET = "NormalRandomDistribution.csv"
-NORM_RAND_DIST_OUTPUT = "NormalRandomDistributionResults.csv"
+NORM_RAND_DIST_SET = "datasets/NormalRandomDistribution.csv"
+NORM_RAND_DIST_OUTPUT = "results/NormalRandomDistributionResults.csv"
 #UniformRandomDistribution
-UNIF_RAND_DIST_SET = "UniformRandomDistribution.csv"
-UNIF_RAND_DIST_OUTPUT = "UniformRandomDistributionResults.csv"
+UNIF_RAND_DIST_SET = "datasets/UniformRandomDistribution.csv"
+UNIF_RAND_DIST_OUTPUT = "results/UniformRandomDistributionResults.csv"
 #AverageEarningDataset
-AVG_EARN_DATASET = "AverageEarningsDataset.csv"
-AVG_EARN_OUTPUT = "AverageEarningsDatasetResults.csv"
+AVG_EARN_DATASET = "datasets/AverageEarningsDataset.csv"
+AVG_EARN_OUTPUT = "results/AverageEarningsDatasetResults.csv"
 #IncomeForCreditCardDefaultDataset
-INC_CREDIT_DEFAULT_DATASET = "IncomeForCreditCardDefaultDataset.csv"
-INC_CREDIT_DEFAULT_OUTPUT = "IncomeForCreditCardDefaultDatasetResults.csv"
+INC_CREDIT_DEFAULT_DATASET = "datasets/IncomeForCreditCardDefaultDataset.csv"
+INC_CREDIT_DEFAULT_OUTPUT = "results/IncomeForCreditCardDefaultDatasetResults.csv"
 
 
 # Main driver function for the data collection program
