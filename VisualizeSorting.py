@@ -42,23 +42,29 @@ import os.path as path
 
 # Constants
 DATASET_SIZE = 100
-TITLE = "Bubble Sort with Shuffled Dataset"
-FPS = 100
-FILENAME = "BubbleSortShuffled.mp4"
+TITLE = "Quick Sort with Reverse Dataset"
+FPS = 30
+FILENAME = "QuickSortReverse.mp4"
 
 # random dataset
-DATASET = [x + 1 for x in range(DATASET_SIZE)]
-random.shuffle(DATASET)
+# DATASET = [x + 1 for x in range(DATASET_SIZE)]
+# random.shuffle(DATASET)
+
+#Static random dataset
+# inputFile = open("datasets/shuffledList.csv", "r")
+# DATASET = inputFile.readline().strip("\t\n ").split(",")
+# for i, x in enumerate(DATASET):
+#     DATASET[i] = int(x)
 
 #reverse order dataset.
-# DATASET = [x for x in range(DATASET_SIZE, 1, -1)]
+DATASET = [x for x in range(DATASET_SIZE, 1, -1)]
 
 """
 Main function for visualization project.
 """
 def main():
     # define sorting function to use
-    SORTING_FUNC = BubbleSort
+    SORTING_FUNC = QuickSort
 
     
     # Initialize the figure and the axis for matplotlib subplots
@@ -100,6 +106,8 @@ def main():
 
     # plt.show()
 
+    print("done!")
+
 # Function that will be called whenever we want to move a frame in the bar graph animation
 def updateFigure(dataList, bars, iteration, text):
     for bar, value in zip(bars, dataList):
@@ -131,6 +139,7 @@ def SelectionSort(A):
         for j in range(i+1, len(A)):
             if A[j] < A[minIndex]:
                 minIndex = j
+                yield A
         # Swap the minimum index and the first element in the unsorted array.
         # Then increment the index of the sorted and unsorted array by 1
         temp = A[minIndex]
